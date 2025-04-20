@@ -18,12 +18,16 @@ function createGrid(maxWidth, boxCount) {
 
 createGrid(MAX_WIDTH, DEFAULT_BOXES);
 
+// Event listener to change background color of box on click
 const boxes = document.querySelectorAll('.box');
-console.log(boxes)
-
 boxes.forEach((box) => {
     box.addEventListener('click', () => {
-        console.log('updating background color');
-        box.classList.add('box-fill')
-    })
+        box.classList.add('box-fill');
+    });
+});
+
+// Event listener to prompt the user to create a custom grid
+const newGridButton = document.querySelector('button');
+newGridButton.addEventListener('click', () => {
+    const gridSize = prompt('Enter a grid size of 100 or less');
 })
