@@ -23,7 +23,3 @@ button {
     display: flex;
     flex-wrap: wrap;
 }
-
-.box-fill {
-    background-color: black;
-}

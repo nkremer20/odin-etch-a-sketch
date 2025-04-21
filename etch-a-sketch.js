@@ -4,14 +4,24 @@ const DEFAULT_BOXES = 16;
 
 const container = document.querySelector('.container');
 
+function randomColor() {
+    return Math.floor(Math.random() * 256);
+};
+
 function createGrid(maxWidth, boxCount) {
     // Calculate the pixel size of the boxes based on the max width so the amount in boxCount can fit on one line
     boxSize = maxWidth/boxCount;
 
     for (let i = 0; i < boxCount * boxCount; i++) {
         const newBox = document.createElement('div');
+
+        // Get random color between 0 and 255 to randomly set the background color on the boxes
+        const r = randomColor();
+        const g = randomColor();
+        const b = randomColor();
+
         newBox.classList.add('box');
-        newBox.setAttribute('style',  `width: ${boxSize}px; height: ${boxSize}px; box-sizing: border-box; border: 1px solid black;`);
+        newBox.setAttribute('style',  `width: ${boxSize}px; height: ${boxSize}px; box-sizing: border-box; border: 1px solid black; background-color: rgb(${r}, ${g}, ${b}, 0);`);
         container.appendChild(newBox);
     }
 };
@@ -19,7 +29,11 @@ function createGrid(maxWidth, boxCount) {
 function fillBoxes(boxes) {
     boxes.forEach((box) => {
         box.addEventListener('click', () => {
-            box.classList.add('box-fill');
+            const currentBackground = box.style.backgroundColor;
+            console.log(currentBackground.slice(-4, -1))
+            const currentOpacity = parseInt(currentBackground.slice(-4, -1));
+            console.log(currentOpacity);
+            box.style.backgroundColor = 'black';
         });
     });
 }
