@@ -2,9 +2,9 @@
 const MAX_WIDTH = 960;
 const DEFAULT_BOXES = 16;
 
-function createGrid(maxWidth, boxCount) {
-    const container = document.querySelector('.container');
+const container = document.querySelector('.container');
 
+function createGrid(maxWidth, boxCount) {
     // Calculate the pixel size of the boxes based on the max width so the amount in boxCount can fit on one line
     boxSize = maxWidth/boxCount;
 
@@ -16,18 +16,37 @@ function createGrid(maxWidth, boxCount) {
     }
 };
 
+function fillBoxes(boxes) {
+    boxes.forEach((box) => {
+        box.addEventListener('click', () => {
+            box.classList.add('box-fill');
+        });
+    });
+}
+
 createGrid(MAX_WIDTH, DEFAULT_BOXES);
 
 // Event listener to change background color of box on click
-const boxes = document.querySelectorAll('.box');
-boxes.forEach((box) => {
-    box.addEventListener('click', () => {
-        box.classList.add('box-fill');
-    });
-});
+let boxes = document.querySelectorAll('.box');
+fillBoxes(boxes);
 
 // Event listener to prompt the user to create a custom grid
 const newGridButton = document.querySelector('button');
 newGridButton.addEventListener('click', () => {
-    const gridSize = prompt('Enter a grid size of 100 or less');
+    const gridSize = parseInt(prompt('Enter a grid size of 100 or less'));
+    console.log(`type: ${typeof(gridSize)} | ${gridSize}`);
+
+    if (gridSize <= 100 && gridSize > 0 && gridSize != NaN) {
+        // Remove all the box elements inside the container
+        while (container.lastElementChild) {
+            container.removeChild(container.lastElementChild);
+        }
+
+        createGrid(MAX_WIDTH, gridSize);
+        boxes = document.querySelectorAll('.box');
+        fillBoxes(boxes);
+    } else {
+        alert('Grid size invalid.  Please try again.')
+    };
 })
+
