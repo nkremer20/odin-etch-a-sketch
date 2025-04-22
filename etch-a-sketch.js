@@ -28,12 +28,19 @@ function createGrid(maxWidth, boxCount) {
 
 function fillBoxes(boxes) {
     boxes.forEach((box) => {
-        box.addEventListener('click', () => {
-            const currentBackground = box.style.backgroundColor;
-            console.log(currentBackground.slice(-4, -1))
-            const currentOpacity = parseInt(currentBackground.slice(-4, -1));
-            console.log(currentOpacity);
-            box.style.backgroundColor = 'black';
+        box.addEventListener('mouseover', () => {
+            const currentBackground = box.style.backgroundColor.split(',');
+            if (currentBackground[0].includes('rgba')){
+                console.log(currentBackground);
+                // const currentOpacity = parseFloat(currentBackground.slice(-3, -1));
+                const currentOpacity = parseFloat(currentBackground[3].replace(')', ''));
+                currentBackground[3] = ' ' + (currentOpacity + 0.1) + ')';
+                box.style.backgroundColor = currentBackground.join(',');
+                console.log(`Opacity changed to ${currentBackground[3]}`);
+            } else {
+                console.log('Opacity already at 100%')
+            }
+
         });
     });
 }
@@ -48,7 +55,6 @@ fillBoxes(boxes);
 const newGridButton = document.querySelector('button');
 newGridButton.addEventListener('click', () => {
     const gridSize = parseInt(prompt('Enter a grid size of 100 or less'));
-    console.log(`type: ${typeof(gridSize)} | ${gridSize}`);
 
     if (gridSize <= 100 && gridSize > 0 && gridSize != NaN) {
         // Remove all the box elements inside the container
